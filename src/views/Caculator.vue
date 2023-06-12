@@ -24,54 +24,52 @@ export default {
   },
   methods: {
     handleValue(value) {
-      if (
-        ((this.isLastInputOperator || this.displayedNumber === '' ) && (value === ')')) ||
-        (this.isLastInputOperator && (value === '-' )) || 
-        (this.displayedNumber === 'Error') || 
-        (this.displayedNumber === '' && (value === '*' || value === '/' || value === '=' || value === ')' || value === '.' || value === '+')) || 
-        (this.displayedNumber.includes('=') && value !== 'AC')
-      ) {
-        return;
-      }
-      if (value === ')' && this.displayedNumber === '') {
-        // this.displayedNumber = '0'; // Đưa về giá trị 0 khi nhập đóng ngoặc mà bên trong trống
-        this.displayedNumber.reset()
-      }
-      switch (value) {
-        case 'AC': 
-          this.displayedNumber = '';
-          this.isResultDisplayed = false;
-          break;
-        case 'Del':
-          this.displayedNumber = this.displayedNumber.slice(0, -1);
-          this.isResultDisplayed = false;
-          break;
-        case '=': 
-          this.calculateResult();
-          break;
-        default:
-          
-          this.displayedNumber += value;
-          break;
-      }
+  // Kiểm tra nếu là toán tử ở cuối hoặc đầu
+  if (
+    (this.isLastInputOperator && (value === '*' || value === '/' || value === '+')) ||
+    (!this.displayedNumber && (value === '*' || value === '/' || value === '+' || value === ')')) ||
+    (!this.displayedNumber && isNaN(value) && value !== '-' && value !== '(')
+  ) {
+    this.displayedNumber = ''; // Xóa giá trị hiển thị
+    return;
+  }
 
-      
-      this.isLastInputOperator = (value === '*' || value === '-' || value === '/');
-    },
+  // Bấm dấu = sau khi có kết quả
+  if (this.isResultDisplayed && value !== 'AC') {
+    return;
+  }
+
+  switch (value) {
+    case 'AC':
+      this.displayedNumber = '';
+      this.isResultDisplayed = false;
+      break;
+    case 'Del':
+      this.displayedNumber = this.displayedNumber.slice(0, -1);
+      this.isResultDisplayed = false;
+      break;
+    case '=':
+      this.calculateResult();
+      break;
+    default:
+      this.displayedNumber += value;
+      break;
+  }
+
+  this.isLastInputOperator = value === '*' || value === '-' || value === '+' || value === '/';
+},
     calculateResult() {
       if (this.isLastInputOperator || this.displayedNumber.includes('=')) {
        
         return;
       }
-
       try {
         const result = eval(this.displayedNumber); 
         this.displayedNumber = result.toString(); 
         this.isResultDisplayed = true;
       } catch (error) {
-        this.displayedNumber = 'Error';
+        this.displayedNumber = '';//error
       }
-
       this.isLastInputOperator = false; 
     }
   }

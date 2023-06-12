@@ -1,27 +1,65 @@
 <template>
   <div class="custom-keyboard">
     <div class="custom-key-row">
-      <div v-for="num in customNumbers" :key="num" class="custom-key-cell">
-        <button @click="handleValue(num)" class="custom-key-button custom-number-key">{{ num }}</button>
-      </div>
-    </div>
-    <div class="custom-key-row">
-      <div v-for="oper in customOperators" :key="oper" class="custom-key-cell">
-        <button @click="handleValue(oper)" class="custom-key-button custom-operator-key">{{ oper }}</button>
-      </div>
-    </div>
-    <div class="custom-key-row">
       <div class="custom-key-cell">
         <button @click="clearInput" class="custom-key-button custom-special-key">AC</button>
-      </div>
-      <div class="custom-key-cell">
-        <button @click="deleteCharacter" class="custom-key-button custom-special-key">Del</button>
       </div>
       <div class="custom-key-cell">
         <button @click="handleValue('(')" class="custom-key-button custom-special-key">(</button>
       </div>
       <div class="custom-key-cell">
         <button @click="handleValue(')')" class="custom-key-button custom-special-key">)</button>
+      </div>
+      <div class="custom-key-cell">
+        <button @click="handleValue('+')" class="custom-key-button custom-operator-key">+</button>
+      </div>
+      <div class="custom-key-cell">
+        <button @click="handleValue('7')" class="custom-key-button custom-number-key">7</button>
+      </div>
+      <div class="custom-key-cell">
+        <button @click="handleValue('8')" class="custom-key-button custom-number-key">8</button>
+      </div>
+      <div class="custom-key-cell">
+        <button @click="handleValue('9')" class="custom-key-button custom-number-key">9</button>
+      </div>
+      <div class="custom-key-cell">
+        <button @click="handleValue('-')" class="custom-key-button custom-operator-key">-</button>
+      </div>
+      <div class="custom-key-cell">
+        <button @click="handleValue('4')" class="custom-key-button custom-number-key">4</button>
+      </div>
+      <div class="custom-key-cell">
+        <button @click="handleValue('5')" class="custom-key-button custom-number-key">5</button>
+      </div>
+      <div class="custom-key-cell">
+        <button @click="handleValue('6')" class="custom-key-button custom-number-key">6</button>
+      </div>
+      <div class="custom-key-cell">
+        <button @click="handleValue('*')" class="custom-key-button custom-operator-key">*</button>
+      </div>
+      <div class="custom-key-cell">
+        <button @click="handleValue('1')" class="custom-key-button custom-number-key">1</button>
+      </div>
+      <div class="custom-key-cell">
+        <button @click="handleValue('2')" class="custom-key-button custom-number-key">2</button>
+      </div>
+      <div class="custom-key-cell">
+        <button @click="handleValue('3')" class="custom-key-button custom-number-key">3</button>
+      </div>
+      <div class="custom-key-cell">
+        <button @click="handleValue('/')" class="custom-key-button custom-operator-key">/</button>
+      </div>
+      <div class="custom-key-cell">
+        <button @click="deleteCharacter" class="custom-key-button custom-special-key">Del</button>
+      </div>
+      <div class="custom-key-cell">
+        <button @click="handleValue('0')" class="custom-key-button custom-number-key">0</button>
+      </div>
+      <div class="custom-key-cell">
+        <button @click="handleValue('.')" class="custom-key-button custom-number-key">.</button>
+      </div>
+      <div class="custom-key-cell">
+        <button @click="handleValue('=')" class="custom-key-button custom-operator-key">=</button>
       </div>
     </div>
   </div>
@@ -31,12 +69,13 @@
 export default {
   name: 'CustomKeyboard',
   data() {
-    return {
-      customNumbers: ['7', '8', '9', '4', '5', '6', '1', '2', '3', '0', '.'],
-      customOperators: ['+', '-', '*', '/', '='],
-      customSpecialKeys: ['AC', 'Del', '(', ')']
-    };
-  },
+  return {
+    customNumbers: ['7', '8', '9', '4', '5', '6', '1', '2', '3', '0', '.'],
+    customOperators: ['+', '-', '*', '/', '='],
+    customSpecialKeys: ['AC', 'Del', '(', ')']
+  };
+},
+
   methods: {
     handleValue(value) {
       this.$emit('sendValue', value);
